@@ -52,17 +52,22 @@ export default function LineChart({ data, color = 'var(--color-accent)' }) {
           <text x={PL - 8} y={t.cy + 3.5} textAnchor="end" fontSize="10" fill="var(--color-mute)" className="num">{t.v}</text>
         </g>
       ))}
-      {pts.map((p, i) => (
-        (pts.length <= 14 || i % 2 === 0) && (
-          <text key={p.x} x={p.cx} y={H - 8} textAnchor="middle" fontSize="10" fill="var(--color-mute)" className="num">
-            {p.x.slice(2).replace('-', '.')}
-          </text>
-        )
-      ))}
+      {pts.map((p, i) => {
+        const step = Math.ceil(pts.length / 8);
+        return (
+          i % step === 0 && (
+            <text key={p.x} x={p.cx} y={H - 8} textAnchor="middle" fontSize="10" fill="var(--color-mute)" className="num">
+              {p.x.slice(2).replace('-', '.')}
+            </text>
+          )
+        );
+      })}
       <path d={`${line} L${pts.at(-1).cx},${H - PB} L${pts[0].cx},${H - PB} Z`} fill={color} opacity="0.07" />
       <path d={line} fill="none" stroke={color} strokeWidth="2" strokeLinejoin="round" strokeLinecap="round" />
       {pts.map((p, i) => (
-        <circle key={i} cx={p.cx} cy={p.cy} r={hover === i ? 4.5 : 3} fill={color} stroke="var(--color-surface)" strokeWidth="2" />
+        (hover === i || pts.length <= 36) && (
+          <circle key={i} cx={p.cx} cy={p.cy} r={hover === i ? 4.5 : 3} fill={color} stroke="var(--color-surface)" strokeWidth="2" />
+        )
       ))}
       {hp && (
         <g pointerEvents="none">
