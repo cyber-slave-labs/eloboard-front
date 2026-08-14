@@ -1,0 +1,12 @@
+{
+  "name": "eloboard-front",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node scraper/test_parse.mjs",
+    "scrape": "node scraper/scrape.mjs"
+  },
+  "dependencies": {
+    "cheerio": "^1.0.0"
+  }
+}

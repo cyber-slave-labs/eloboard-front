@@ -1,0 +1,61 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #0b0e13;
+  --color-surface: #10141b;
+  --color-raised: #151b26;
+  --color-ink: #edf1f7;
+  --color-ink2: #98a2b3;
+  --color-mute: #5c6675;
+  --color-hairline: rgba(237, 241, 247, 0.08);
+  --color-gold: #c08820;
+  --color-goldhi: #e8b54a;
+  /* race palette, CVD-validated for this dark surface */
+  --color-race-p: #c08820;
+  --color-race-t: #4e8fc7;
+  --color-race-z: #d95d82;
+  --color-win: #3fa66a;
+  --color-loss: #d95757;
+  --font-disp: "Rajdhani", "IBM Plex Sans KR", sans-serif;
+  --font-body: "IBM Plex Sans KR", sans-serif;
+}
+
+html {
+  background: var(--color-bg);
+  color-scheme: dark;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--color-ink);
+  background:
+    radial-gradient(1100px 400px at 50% -160px, rgba(192, 136, 32, 0.07), transparent 70%),
+    repeating-linear-gradient(to bottom, transparent 0 47px, rgba(237, 241, 247, 0.025) 47px 48px),
+    var(--color-bg);
+  min-height: 100vh;
+}
+
+.num {
+  font-family: var(--font-disp);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.01em;
+}
+
+/* broadcast lower-third corner cut */
+.clip-tab {
+  clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 0 100%);
+}
+
+.reveal {
+  animation: rise 0.45s ease both;
+}
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+::selection {
+  background: rgba(192, 136, 32, 0.35);
+}

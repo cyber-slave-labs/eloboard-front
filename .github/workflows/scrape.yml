@@ -1,0 +1,39 @@
+# Daily incremental scrape. NOTE: eloboard.com may be reachable only from
+# Korean IPs; if the connectivity check fails on GitHub runners, run
+# `node scraper/scrape.mjs daily` from a Korean machine and push instead.
+name: scrape
+
+on:
+  schedule:
+    - cron: '0 21 * * *' # 06:00 KST
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: connectivity check
+        run: curl -sf --max-time 20 -A "Mozilla/5.0" -o /dev/null https://eloboard.com/women/
+      - run: npm ci
+      - run: node scraper/scrape.mjs daily
+      - name: commit data
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add data
+          git diff --cached --quiet || git commit -m "data: daily scrape $(date -u +%F)"
+          git push
+      # A push made with GITHUB_TOKEN does not trigger the deploy workflow,
+      # so dispatch it explicitly.
+      - name: trigger deploy
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run deploy.yml --ref main
