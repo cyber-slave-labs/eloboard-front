@@ -31,6 +31,7 @@ jobs:
           git config user.email github-actions@github.com
           git add data
           git diff --cached --quiet || git commit -m "data: daily scrape $(date -u +%F)"
+          git pull --rebase origin main
           git push
       # A push made with GITHUB_TOKEN does not trigger the deploy workflow,
       # so dispatch it explicitly.
