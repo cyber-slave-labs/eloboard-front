@@ -70,6 +70,27 @@ export function ResultPill({ win }) {
   );
 }
 
+export function RecentFeed({ recent, byName, limit = 22 }) {
+  return (
+    <ol className="divide-y divide-hairline">
+      {recent.slice(0, limit).map((m, i) => {
+        const w = byName?.get(m.winner), l = byName?.get(m.loser);
+        return (
+          <li key={`${m.kind}${m.id}`} className="px-4 py-2 flex items-center gap-2 text-sm reveal" style={{ animationDelay: `${Math.min(i * 25, 500)}ms` }}>
+            <span className="num text-[10px] text-mute w-9 shrink-0">{m.date.slice(5).replace('-', '.')}</span>
+            <span className="flex-1 min-w-0 truncate">
+              {w ? <PlayerLink id={w.id} name={m.winner} race={m.winnerRace} /> : <span>{m.winner}</span>}
+              <span className="text-mute text-xs mx-1.5">승</span>
+              {l ? <PlayerLink id={l.id} name={m.loser} race={m.loserRace} className="opacity-70" /> : <span className="opacity-70">{m.loser}</span>}
+            </span>
+            {m.map && <span className="text-[10px] text-mute bg-raised rounded-md px-1.5 py-0.5 shrink-0 max-w-20 truncate">{m.map}</span>}
+          </li>
+        );
+      })}
+    </ol>
+  );
+}
+
 export function Section({ title, aside, children, className = '' }) {
   return (
     <section className={`card overflow-hidden ${className}`}>

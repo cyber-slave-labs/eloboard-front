@@ -329,6 +329,7 @@ function cmdSummary() {
   const totals = {};
   const mapStats = {};
   const recent = [];
+  const dayCount = new Map(); // date -> unique match count
   const seenMatch = new Set();
   const raceAt = new Map(); // matchId -> {name: race} from the opponent's row
 
@@ -360,6 +361,7 @@ function cmdSummary() {
         const key = `${kind}:${m.id ?? `${m.date}|${rec.name}|${m.opp}`}`;
         if (seenMatch.has(key)) continue;
         seenMatch.add(key);
+        dayCount.set(m.date, (dayCount.get(m.date) ?? 0) + 1);
         // ponytail: race at match time falls back to current race when the
         // opponent's own record was not scraped (retired/unlisted players)
         const myRace = raceAt.get(key)?.[rec.name] ?? t.race ?? '?';
@@ -401,11 +403,22 @@ function cmdSummary() {
       writeJson(`records/${f}`, rec);
     }
   }
+  // Last 30 calendar days of activity, zero-filled, ending at the latest
+  // match date on record.
+  const daily = [];
+  if (dayCount.size) {
+    const end = new Date([...dayCount.keys()].sort().at(-1));
+    for (let i = 29; i >= 0; i--) {
+      const d = new Date(end.getTime() - i * 86400000).toISOString().slice(0, 10);
+      daily.push([d, dayCount.get(d) ?? 0]);
+    }
+  }
   writeJson('summary.json', {
     generated: new Date().toISOString(),
     months,
     totals,
     mapStats,
+    daily,
     recent: recent.slice(0, 80),
   });
   console.log(`summary: ${Object.keys(totals).length} players, ${seenMatch.size} unique matches, ${Object.keys(mapStats).length} maps`);

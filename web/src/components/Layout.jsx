@@ -60,7 +60,8 @@ function Search() {
 }
 
 const tabs = [
-  { to: '/', label: '랭킹' },
+  { to: '/', label: '홈' },
+  { to: '/rankings', label: '랭킹' },
   { to: '/vs', label: '상대전적' },
   { to: '/maps', label: '맵' },
 ];
