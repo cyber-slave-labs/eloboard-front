@@ -7,7 +7,7 @@ import LineChart from '../components/LineChart.jsx';
 function Stat({ label, value, sub }) {
   return (
     <div>
-      <div className="text-[10px] text-mute tracking-[0.18em] uppercase mb-0.5">{label}</div>
+      <div className="text-xs text-mute font-medium mb-1">{label}</div>
       <div className="num text-2xl font-bold leading-none">{value}</div>
       {sub && <div className="text-[11px] text-ink2 mt-1">{sub}</div>}
     </div>
@@ -55,17 +55,14 @@ export default function Player() {
 
   return (
     <div className="flex flex-col gap-6">
-      <div
-        className="clip-tab bg-surface border border-hairline rounded-lg p-5 sm:p-6 reveal"
-        style={{ boxShadow: `inset 3px 0 0 ${race.color}`, background: `linear-gradient(105deg, color-mix(in srgb, ${race.color} 7%, var(--color-surface)) 0%, var(--color-surface) 45%)` }}
-      >
+      <div className="card p-6 sm:p-7 reveal">
         <div className="flex flex-wrap items-end gap-x-8 gap-y-4">
           <div className="min-w-40">
             <div className="flex items-center gap-2 mb-1.5">
               <RaceTag race={rec.race} size="lg" />
               <span className="text-xs text-ink2">{race.label}</span>
               {rec.channel && (
-                <a href={rec.channel} target="_blank" rel="noreferrer" className="text-[10px] text-mute border border-hairline rounded px-1.5 py-0.5 hover:text-goldhi hover:border-gold/50 transition-colors">
+                <a href={rec.channel} target="_blank" rel="noreferrer" className="text-[10px] font-semibold text-ink2 bg-raised rounded-md px-1.5 py-0.5 hover:text-accent-dark transition-colors">
                   SOOP ↗
                 </a>
               )}
@@ -116,7 +113,7 @@ export default function Player() {
                   <span className="num text-sm w-16 text-right">{w}–{l}</span>
                   <WinBar w={w} l={l} color={race.color} className="w-32" />
                   {p && (
-                    <Link to={`/vs?a=${rec.id}&b=${p.id}`} className="text-[10px] text-mute hover:text-goldhi border border-hairline rounded px-1.5 py-0.5 shrink-0">
+                    <Link to={`/vs?a=${rec.id}&b=${p.id}`} className="text-[11px] font-semibold text-ink2 hover:text-accent-dark bg-raised rounded-md px-2 py-1 shrink-0">
                       상세
                     </Link>
                   )}
@@ -146,7 +143,7 @@ export default function Player() {
             value={filter}
             onChange={(e) => { setFilter(e.target.value); setShown(30); }}
             placeholder="상대·맵 필터"
-            className="bg-raised border border-hairline rounded-md px-2 py-1 text-xs w-32 placeholder:text-mute focus:outline-none"
+            className="bg-raised rounded-lg px-2.5 py-1.5 text-xs w-32 placeholder:text-mute focus:outline-none focus:ring-2 focus:ring-accent/30"
           />
         }
       >
@@ -173,7 +170,7 @@ export default function Player() {
           <button
             type="button"
             onClick={() => setShown((s) => s + 60)}
-            className="w-full py-2.5 text-xs text-ink2 hover:text-goldhi hover:bg-raised/50 transition-colors border-t border-hairline"
+            className="w-full py-3 text-xs font-semibold text-ink2 hover:text-accent-dark hover:bg-raised/50 transition-colors border-t border-hairline"
           >
             더 보기 ({filtered.length - shown}건 남음)
           </button>

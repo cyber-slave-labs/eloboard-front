@@ -1,61 +1,60 @@
 @import "tailwindcss";
 
 @theme {
-  --color-bg: #0b0e13;
-  --color-surface: #10141b;
-  --color-raised: #151b26;
-  --color-ink: #edf1f7;
-  --color-ink2: #98a2b3;
-  --color-mute: #5c6675;
-  --color-hairline: rgba(237, 241, 247, 0.08);
-  --color-gold: #c08820;
-  --color-goldhi: #e8b54a;
-  /* race palette, CVD-validated for this dark surface */
-  --color-race-p: #c08820;
-  --color-race-t: #4e8fc7;
-  --color-race-z: #d95d82;
-  --color-win: #3fa66a;
-  --color-loss: #d95757;
-  --font-disp: "Rajdhani", "IBM Plex Sans KR", sans-serif;
-  --font-body: "IBM Plex Sans KR", sans-serif;
+  /* TDS-inspired light tokens */
+  --color-bg: #f2f4f6;
+  --color-surface: #ffffff;
+  --color-raised: #f2f4f6;
+  --color-ink: #191f28;
+  --color-ink2: #4e5968;
+  --color-mute: #8b95a1;
+  --color-hairline: #eef0f3;
+  --color-accent: #3182f6;
+  --color-accent-dark: #1b64da;
+  --color-accent-soft: #e8f3ff;
+  /* race palette, CVD-validated for the white card surface */
+  --color-race-p: #c98500;
+  --color-race-t: #2a78d6;
+  --color-race-z: #c2447a;
+  --color-win: #059669;
+  --color-loss: #e5364b;
+  --font-body: "Pretendard Variable", Pretendard, -apple-system, "Apple SD Gothic Neo", sans-serif;
 }
 
 html {
   background: var(--color-bg);
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 body {
   font-family: var(--font-body);
   color: var(--color-ink);
-  background:
-    radial-gradient(1100px 400px at 50% -160px, rgba(192, 136, 32, 0.07), transparent 70%),
-    repeating-linear-gradient(to bottom, transparent 0 47px, rgba(237, 241, 247, 0.025) 47px 48px),
-    var(--color-bg);
+  background: var(--color-bg);
   min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
 }
 
 .num {
-  font-family: var(--font-disp);
   font-variant-numeric: tabular-nums;
-  letter-spacing: 0.01em;
+  letter-spacing: -0.01em;
 }
 
-/* broadcast lower-third corner cut */
-.clip-tab {
-  clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 0 100%);
+.card {
+  background: var(--color-surface);
+  border-radius: 20px;
+  box-shadow: 0 1px 4px rgba(25, 31, 40, 0.04);
 }
 
 .reveal {
-  animation: rise 0.45s ease both;
+  animation: rise 0.4s ease both;
 }
 @keyframes rise {
   from {
     opacity: 0;
-    transform: translateY(8px);
+    transform: translateY(6px);
   }
 }
 
 ::selection {
-  background: rgba(192, 136, 32, 0.35);
+  background: rgba(49, 130, 246, 0.2);
 }

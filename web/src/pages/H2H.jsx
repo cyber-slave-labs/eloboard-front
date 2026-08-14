@@ -8,7 +8,7 @@ function Picker({ idx, value, onChange, placeholder }) {
     <select
       value={value ?? ''}
       onChange={(e) => onChange(e.target.value || null)}
-      className="bg-raised border border-hairline rounded-md px-3 py-2 text-sm flex-1 focus:outline-none focus:border-gold/60"
+      className="bg-surface rounded-xl px-3.5 py-2.5 text-sm flex-1 shadow-[0_1px_3px_rgba(25,31,40,0.06)] focus:outline-none focus:ring-2 focus:ring-accent/30 cursor-pointer"
     >
       <option value="">{placeholder}</option>
       {idx.all.map((p) => (
@@ -60,10 +60,10 @@ export default function H2H() {
 
       {a && b && h2h && (
         h2h.ms.length === 0 ? (
-          <div className="p-10 text-center text-mute text-sm bg-surface border border-hairline rounded-lg">두 선수의 맞대결 기록이 없습니다.</div>
+          <div className="card p-10 text-center text-mute text-sm">두 선수의 맞대결 기록이 없습니다.</div>
         ) : (
           <>
-            <div className="clip-tab bg-surface border border-hairline rounded-lg p-6 reveal">
+            <div className="card p-6 reveal">
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-2">
                   <RaceTag race={a.race} size="lg" />
@@ -118,7 +118,7 @@ export default function H2H() {
         )
       )}
       {!(a && b) && (
-        <div className="p-14 text-center text-mute text-sm bg-surface border border-hairline rounded-lg">
+        <div className="card p-14 text-center text-mute text-sm">
           두 선수를 선택하면 맞대결 전적을 보여드립니다.
         </div>
       )}

@@ -4,11 +4,11 @@ import { RACES, pct } from '../lib/data.js';
 export function RaceTag({ race, size = 'sm' }) {
   const r = RACES[race];
   if (!r) return <span className="text-mute text-xs">?</span>;
-  const cls = size === 'sm' ? 'w-4.5 h-4.5 text-[11px]' : 'w-6 h-6 text-sm';
+  const cls = size === 'sm' ? 'w-5 h-5 text-[11px] rounded-md' : 'w-6.5 h-6.5 text-sm rounded-lg';
   return (
     <span
-      className={`num inline-flex items-center justify-center rounded-[3px] font-bold shrink-0 ${cls}`}
-      style={{ color: r.color, background: `color-mix(in srgb, ${r.color} 16%, transparent)`, border: `1px solid color-mix(in srgb, ${r.color} 45%, transparent)` }}
+      className={`num inline-flex items-center justify-center font-bold shrink-0 ${cls}`}
+      style={{ color: r.color, background: `color-mix(in srgb, ${r.color} 10%, transparent)` }}
       title={r.label}
     >
       {race}
@@ -18,7 +18,7 @@ export function RaceTag({ race, size = 'sm' }) {
 
 export function PlayerLink({ id, name, race, className = '' }) {
   return (
-    <Link to={`/p/${id}`} className={`inline-flex items-center gap-1.5 hover:text-goldhi transition-colors ${className}`}>
+    <Link to={`/p/${id}`} className={`inline-flex items-center gap-1.5 hover:text-accent-dark transition-colors ${className}`}>
       {race ? <RaceTag race={race} /> : null}
       <span className="font-medium">{name}</span>
     </Link>
@@ -26,11 +26,11 @@ export function PlayerLink({ id, name, race, className = '' }) {
 }
 
 // Thin win-rate bar: entity-colored fill on a hairline track, label outside.
-export function WinBar({ w, l, color = 'var(--color-gold)', className = '' }) {
+export function WinBar({ w, l, color = 'var(--color-accent)', className = '' }) {
   const p = pct(w, l);
   return (
     <div className={`flex items-center gap-2 min-w-0 ${className}`}>
-      <div className="h-1 rounded-full bg-hairline flex-1 overflow-hidden">
+      <div className="h-1.5 rounded-full bg-raised flex-1 overflow-hidden">
         <div className="h-full rounded-full" style={{ width: `${p}%`, background: color }} />
       </div>
       <span className="num text-xs text-ink2 w-10 text-right shrink-0">{p}%</span>
@@ -59,10 +59,10 @@ export function SplitBar({ a, b, colorA, colorB, labelA, labelB }) {
 export function ResultPill({ win }) {
   return (
     <span
-      className="num inline-flex w-6 h-6 items-center justify-center rounded-[3px] text-xs font-bold"
+      className="num inline-flex w-6 h-6 items-center justify-center rounded-md text-xs font-bold"
       style={{
         color: win ? 'var(--color-win)' : 'var(--color-loss)',
-        background: `color-mix(in srgb, ${win ? 'var(--color-win)' : 'var(--color-loss)'} 14%, transparent)`,
+        background: `color-mix(in srgb, ${win ? 'var(--color-win)' : 'var(--color-loss)'} 9%, transparent)`,
       }}
     >
       {win ? '승' : '패'}
@@ -72,9 +72,9 @@ export function ResultPill({ win }) {
 
 export function Section({ title, aside, children, className = '' }) {
   return (
-    <section className={`bg-surface border border-hairline rounded-lg ${className}`}>
-      <header className="flex items-center justify-between px-4 py-2.5 border-b border-hairline">
-        <h2 className="num text-[13px] font-semibold tracking-[0.14em] text-ink2 uppercase">{title}</h2>
+    <section className={`card overflow-hidden ${className}`}>
+      <header className="flex items-center justify-between px-5 pt-4 pb-2.5">
+        <h2 className="text-[15px] font-bold text-ink">{title}</h2>
         {aside}
       </header>
       {children}

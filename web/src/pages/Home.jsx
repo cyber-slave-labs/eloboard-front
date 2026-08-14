@@ -27,7 +27,7 @@ function RecentFeed({ recent, byName }) {
               <span className="text-mute text-xs mx-1.5">승</span>
               {l ? <PlayerLink id={l.id} name={m.loser} race={m.loserRace} className="opacity-70" /> : <span className="opacity-70">{m.loser}</span>}
             </span>
-            {m.map && <span className="text-[10px] text-mute bg-raised border border-hairline rounded px-1.5 py-0.5 shrink-0 max-w-20 truncate">{m.map}</span>}
+            {m.map && <span className="text-[10px] text-mute bg-raised rounded-md px-1.5 py-0.5 shrink-0 max-w-20 truncate">{m.map}</span>}
           </li>
         );
       })}
@@ -57,7 +57,7 @@ export default function Home() {
           <select
             value={ym ?? ''}
             onChange={(e) => setSel(e.target.value)}
-            className="num bg-raised border border-hairline rounded-md px-2 py-1 text-xs text-ink2 focus:outline-none"
+            className="num bg-raised rounded-lg px-2.5 py-1.5 text-xs font-semibold text-ink2 focus:outline-none cursor-pointer"
           >
             {[...months].reverse().map((m) => <option key={m} value={m}>{m.replace('-', '.')}</option>)}
           </select>
@@ -67,7 +67,7 @@ export default function Home() {
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="text-mute text-[11px] tracking-widest uppercase">
+                <tr className="text-mute text-xs font-medium">
                   <th className="px-4 py-2 text-left w-16">순위</th>
                   <th className="py-2 text-left">선수</th>
                   <th className="py-2 text-right hidden md:table-cell">vs Z</th>
@@ -85,7 +85,7 @@ export default function Home() {
                     <tr key={r.name} className="hover:bg-raised/60 transition-colors reveal" style={{ animationDelay: `${Math.min(i * 15, 450)}ms` }}>
                       <td className="px-4 py-2">
                         <div className="flex items-center gap-2">
-                          <span className={`num text-lg font-bold w-7 ${r.rank <= 3 ? 'text-goldhi' : 'text-ink2'}`}>{r.rank}</span>
+                          <span className={`num text-base font-bold w-7 ${r.rank <= 3 ? 'text-accent' : 'text-ink2'}`}>{r.rank}</span>
                           <RankDelta cur={r.rank} prev={prevRank.get(r.name)} />
                         </div>
                       </td>

@@ -36,17 +36,17 @@ function Search() {
           if (e.key === 'Escape') setOpen(false);
         }}
         placeholder="선수 검색"
-        className="w-36 sm:w-48 bg-raised border border-hairline rounded-md px-3 py-1.5 text-sm placeholder:text-mute focus:outline-none focus:border-gold/60 transition-colors"
+        className="w-36 sm:w-52 bg-surface rounded-xl px-3.5 py-2 text-sm shadow-[0_1px_3px_rgba(25,31,40,0.06)] placeholder:text-mute focus:outline-none focus:ring-2 focus:ring-accent/30 transition-shadow"
       />
       {open && hits.length > 0 && (
-        <ul className="absolute right-0 top-full mt-1.5 w-56 bg-raised border border-hairline rounded-md overflow-hidden shadow-xl shadow-black/40 z-50">
+        <ul className="absolute right-0 top-full mt-2 w-56 bg-surface rounded-xl overflow-hidden shadow-[0_8px_24px_rgba(25,31,40,0.12)] z-50">
           {hits.map((p, i) => (
             <li key={p.id}>
               <button
                 type="button"
                 onMouseDown={(e) => { e.preventDefault(); go(p); }}
                 onMouseEnter={() => setSel(i)}
-                className={`w-full flex items-center gap-2 px-3 py-2 text-sm text-left ${i === sel ? 'bg-gold/10 text-goldhi' : ''}`}
+                className={`w-full flex items-center gap-2 px-3.5 py-2.5 text-sm text-left ${i === sel ? 'bg-accent-soft text-accent-dark' : ''}`}
               >
                 <RaceTag race={p.race} />
                 {p.name}
@@ -68,10 +68,10 @@ const tabs = [
 export default function Layout() {
   return (
     <div className="max-w-6xl mx-auto px-4 pb-20">
-      <header className="flex items-center gap-5 sm:gap-8 py-5 mb-6 border-b border-hairline">
-        <Link to="/" className="flex items-baseline gap-2 shrink-0">
-          <span className="num text-2xl font-bold tracking-tight text-goldhi">ELO<span className="text-mute">/</span>W</span>
-          <span className="hidden sm:inline text-[11px] text-mute tracking-[0.2em] uppercase">StarCraft Women's Ladder</span>
+      <header className="flex items-center gap-4 sm:gap-8 py-5 mb-4">
+        <Link to="/" className="flex items-baseline gap-2.5 shrink-0">
+          <span className="text-[22px] font-extrabold tracking-tight text-ink">ELO<span className="text-accent">/W</span></span>
+          <span className="hidden sm:inline text-xs text-mute font-medium">스타크래프트 여성부 전적</span>
         </Link>
         <nav className="flex items-center gap-1 flex-1">
           {tabs.map((t) => (
@@ -80,8 +80,8 @@ export default function Layout() {
               to={t.to}
               end={t.to === '/'}
               className={({ isActive }) =>
-                `num px-3 py-1.5 rounded-md text-sm font-semibold tracking-wide transition-colors ${
-                  isActive ? 'text-goldhi bg-gold/10' : 'text-ink2 hover:text-ink'
+                `px-3.5 py-1.5 rounded-full text-sm font-semibold transition-colors ${
+                  isActive ? 'text-accent-dark bg-accent-soft' : 'text-ink2 hover:bg-surface'
                 }`
               }
             >
@@ -92,7 +92,7 @@ export default function Layout() {
         <Search />
       </header>
       <Outlet />
-      <footer className="mt-16 pt-4 border-t border-hairline text-xs text-mute leading-relaxed">
+      <footer className="mt-16 pt-4 text-xs text-mute leading-relaxed">
         데이터 출처: <a href="https://eloboard.com/women" target="_blank" rel="noreferrer" className="underline hover:text-ink2">eloboard.com/women</a> — 비공식 읽기 전용 뷰어입니다. 전적 등록·수정은 원본 사이트에서 해주세요.
       </footer>
     </div>

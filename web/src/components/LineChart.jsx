@@ -4,7 +4,7 @@ import { useMemo, useRef, useState } from 'react';
 // tooltip on hover. data: [{ x: label, y: number, sub: string }]
 const W = 640, H = 200, PL = 46, PR = 14, PT = 14, PB = 26;
 
-export default function LineChart({ data, color = 'var(--color-gold)' }) {
+export default function LineChart({ data, color = 'var(--color-accent)' }) {
   const svgRef = useRef(null);
   const [hover, setHover] = useState(null);
 
