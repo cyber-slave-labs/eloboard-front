@@ -278,6 +278,24 @@ function cmdSummary() {
     perPlayer.set(rec.name, byMonth);
   }
 
+  // Anchor correction: race changes and deleted matches make the forward walk
+  // drift for some players. For anyone in the live current table, shift their
+  // whole curve so the final value matches the site exactly; retired players
+  // keep the base-1000 estimate.
+  const cur = readJson(`rankings/${monthKey()}.json`, { rows: [] }).rows;
+  let shifted = 0;
+  for (const r of cur) {
+    const bm = perPlayer.get(r.name);
+    if (!bm || r.elo == null) continue;
+    const months = [...bm.keys()].sort();
+    const finalElo = bm.get(months.at(-1)).elo;
+    const offset = Math.round((r.elo - finalElo) * 10) / 10;
+    if (Math.abs(offset) <= 0.5) continue;
+    shifted++;
+    for (const e of bm.values()) e.elo = Math.round((e.elo + offset) * 10) / 10;
+  }
+  if (shifted) console.log(`anchored ${shifted} players to live table elo`);
+
   // Cross-player pass: per-month tables ranked by month-end ELO among players
   // active that month, written as months/YYYY-MM.json for the frontend.
   const months = [...new Set([...perPlayer.values()].flatMap((bm) => [...bm.keys()]))].sort();
@@ -302,7 +320,6 @@ function cmdSummary() {
   }
 
   // Sanity: reconstructed final ELO should match the live current table.
-  const cur = readJson(`rankings/${monthKey()}.json`, { rows: [] }).rows;
   const off = cur.filter((r) => {
     const t = trend.get(r.name)?.at(-1);
     return t && Math.abs(t[1] - r.elo) > 0.5;
