@@ -19,7 +19,8 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 20
+          cache: npm
       - name: connectivity check
         run: curl -sf --max-time 20 -A "Mozilla/5.0" -o /dev/null https://eloboard.com/women/
       - run: npm ci
